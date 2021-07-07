@@ -1,16 +1,13 @@
 import React from "react";
-import App from "./App";
 
-function Meal() {
-    const meal = App.meal
-    const list = meal.map(
-        info => (<Meal key={meal.id} value={meal}/>)
-    );
+function Meal(meal) {
+    console.log(meal)
     return (
         <div>
-            <b>meal</b>
+            <b>{meal[1]}</b> // TODO: 배열 렌더링
         </div>
     )
 }
+
 
 export default Meal;

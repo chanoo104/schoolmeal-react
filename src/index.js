@@ -8,7 +8,6 @@ const styleLink = document.createElement("link");
 styleLink.rel = "stylesheet";
 styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
 document.head.appendChild(styleLink);
-let meal = "";
 
 const handleCreate = (data) => {
     getmeal(data)
@@ -25,16 +24,19 @@ function getmeal(data) {
         }
     }).then(function (response) {
         alert(response.data)
-        meal = response.data
+        Meal(response.data)
     }).catch(function (error) {
         // 오류발생시 실행
     }).then(function () {
         // 항상 실행
     });
-};
-
+}
 
 ReactDOM.render(
     <Form onCreate={handleCreate}/>,
-    document.getElementById("root")
+    document.getElementById("form")
+);
+ReactDOM.render(
+    <Meal />,
+    document.getElementById("meal")
 );
