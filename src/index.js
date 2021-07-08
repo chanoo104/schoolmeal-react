@@ -24,7 +24,8 @@ function getmeal(data) {
         }
     }).then(function (response) {
         alert(response.data)
-        Meal(response.data)
+        const meal = new Meal(response.data);
+        meal.set(response.data)
     }).catch(function (error) {
         // 오류발생시 실행
     }).then(function () {
