@@ -1,43 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Form from "./App"
-import axios from "axios";
-import Meal from "./meal";
+import {App} from "./App"
 
-const styleLink = document.createElement("link");
-styleLink.rel = "stylesheet";
-styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
-document.head.appendChild(styleLink);
+import 'semantic-ui-css/semantic.min.css';
 
-const handleCreate = (data) => {
-    getmeal(data)
-}
-
-function getmeal(data) {
-    axios.get("http://localhost:8080/meal", {
-        params: {
-            schulCode: data.schulCode,
-            schulCrseScCode: data.schulCrseScCode,
-            schulKndScCode: data.schulKndScCode,
-            schMmealScCode: data.schMmealScCode,
-            schYmd: data.schYmd
-        }
-    }).then(function (response) {
-        alert(response.data)
-        const meal = new Meal(response.data);
-        meal.set(response.data)
-    }).catch(function (error) {
-        // 오류발생시 실행
-    }).then(function () {
-        // 항상 실행
-    });
-}
 
 ReactDOM.render(
-    <Form onCreate={handleCreate}/>,
-    document.getElementById("form")
-);
-ReactDOM.render(
-    <Meal />,
-    document.getElementById("meal")
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root'),
 );

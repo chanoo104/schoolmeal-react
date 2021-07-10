@@ -1,6 +1,21 @@
-import React, {Component} from "react";
-import {Container} from 'semantic-ui-react'
+import React from "react";
+import {Segment} from 'semantic-ui-react'
 
+
+export const Meal = ({ data }) => {
+    
+    const mealList = data.map(
+        (meal, index) => (<li key={index}>{meal}</li>)
+    );
+
+    return (
+        <Segment>
+            <ul>{mealList}</ul>
+        </Segment>
+    );
+}
+
+/*
 class Meal extends Component {
     constructor(props) {
         super(props);
@@ -33,5 +48,5 @@ class Meal extends Component {
         );
     }
 }
-
+//*/
 export default Meal;
