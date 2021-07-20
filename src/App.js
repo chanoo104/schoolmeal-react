@@ -65,7 +65,7 @@ const Form = () => {
             })
             return response.data;
         } catch (e) {
-            throw new Error();
+            // throw new Error();
         }
     }
 
@@ -78,10 +78,14 @@ const Form = () => {
             schMmealScCode: form.schMmealScCode,
             schYmd: form.schYmd.replace(/-/gi, '.')
         }
-        console.log(formData)
+        console.log(formData);
         const data = await getmeal(formData);
         console.log(data);
-        setMealData(data);
+        if(data.status == "OK") {
+            setMealData(data.meals);
+        } else {
+            alert("해당 날짜에는 급식이 없습니다!")
+        }
     }
 
 
