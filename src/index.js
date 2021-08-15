@@ -1,12 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {App} from "./App"
+import {createTheme, ThemeProvider} from "@material-ui/core";
+import {koKr} from '@material-ui/core/locale';
+import './index.css'
 
-import 'semantic-ui-css/semantic.min.css';
+const theme = createTheme({}, koKr);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root'),
+    <React.StrictMode>
+        <ThemeProvider theme={theme}>
+            <App/>
+        </ThemeProvider>
+    </React.StrictMode>,
+    document.getElementById('root'),
 );
+

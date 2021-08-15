@@ -1,61 +1,91 @@
-import React, { useState } from 'react'
-import { Dropdown, Button, Container, Header, Input } from 'semantic-ui-react'
+import React, {useState} from 'react'
+import {
+    Button,
+    CircularProgress,
+    Container,
+    FormControl,
+    InputLabel,
+    makeStyles,
+    MenuItem,
+    Select,
+    TextField
+} from '@material-ui/core'
+import {MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 
 import axios from 'axios'
-import { Meal } from './meal'
-
+import {Meal} from './meal'
+import DateFnsUtils from "@date-io/date-fns";
+import {format, parse} from "date-fns";
+import {ko} from 'date-fns/esm/locale'
+import {green} from "@material-ui/core/colors";
 
 export const App = () => {
     return (
-        <Form />
+        <Form/>
     )
 }
 
-const schoolOptions = [
-    {
-        key: '유치원',
-        text: '유치원',
-        value: '1',
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        marginTop: theme.spacing(2),
+        minWidth: 180,
     },
-    {
-        key: '초등학교',
-        text: '초등학교',
-        value: '2',
+    selectEmpty: {
+        marginTop: theme.spacing(2),
     },
-    {
-        key: '중학교',
-        text: '중학교',
-        value: '3',
+    title: {
+        fontSize: 30
     },
-    {
-        key: '고등학교',
-        text: '고등학교',
-        value: '4',
+    buttonSuccess: {
+        backgroundColor: green[500],
+        '&:hover': {
+            backgroundColor: green[700],
+        },
     },
-]
+    fabProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: -6,
+        left: -6,
+        zIndex: 1,
+    },
+    buttonProgress: {
+        color: green[500],
+        position: 'absolute',
+        marginTop: 5,
+        marginLeft: -43,
+    },
+}));
+
 
 const Form = () => {
+    const classes = useStyles();
+    const today = new Date();
+    const [loading, setLoading] = React.useState(false);
     const [form, setForm] = useState({
         schulCode: "",
         schoolKind: "",
         schMmealScCode: "",
-        schYmd: "",
+        schYmd: today.getFullYear() + "." + (today.getMonth() + 1) + "." + today.getDate(),
     })
     const [mealData, setMealData] = useState(null);
 
-    const handleDropdown = (e, { value, name }) => {
-        console.log(value)
-        setForm({
-            ...form,
-            [name]: value
-        })
-    }
 
-    const handleChange = (e) => {
+    const handleChange = (event) => {
+        console.log(event)
+        const name = event.target.name;
         setForm({
             ...form,
-            [e.target.name]: e.target.value
-        })
+            [name]: event.target.value,
+        });
+    };
+
+    const handleDate = (e) => {
+        setForm({
+                ...form,
+                schYmd: format(e, 'yyyy.MM.dd'),
+            }
+        )
     }
 
     const getmeal = async (form) => {
@@ -76,80 +106,91 @@ const Form = () => {
             schulCrseScCode: '0' + form.schoolKind,
             schulKndScCode: form.schoolKind,
             schMmealScCode: form.schMmealScCode,
-            schYmd: form.schYmd.replace(/-/gi, '.')
+            schYmd: form.schYmd
         }
+        setLoading(true);
         console.log(formData);
         const data = await getmeal(formData);
         console.log(data);
-        if(data.status == "OK") {
+        if (data.status === "OK") {
             setMealData(data.meals);
+            setLoading(false);
         } else {
-            alert("해당 날짜에는 급식이 없습니다!")
+            alert("해당 날짜에는 급식이 없습니다!");
+            setLoading(false);
         }
     }
 
 
     return (
-        <Container text frame style={{ marginTop: '2em' }}>
+        <Container maxWidth="sm">
             <form onSubmit={handleSubmit}>
-                <Header as='h2'>{new Date().toLocaleDateString()}</Header>
-
-                <b>학교 코드를 입력하세요.(인마고는 E100000276)</b>
-
-                <Input fluid name="schulCode"
-                    placeholder="학교 코드"
-                    value={form.schulCode}
-                    onChange={handleChange}
-                // error='Please enter your last name'
+                <h1 className={classes.title}>{new Date().toLocaleDateString()}</h1>
+                <TextField fluid name="schulCode"
+                           defaultValue="Hello World"
+                           id="standard-basic"
+                           label="학교 코드"
+                           value={form.schulCode}
+                           onChange={handleChange}
                 />
-
-                <b>학교 종류를 선택하세요.</b>
-                <Dropdown
-                    name='schoolKind'
-                    placeholder='학교 종류 선택'
-                    fluid
-                    selection
-                    value={form.schoolKind}
-                    onChange={handleDropdown}
-                    options={schoolOptions}
-                />
-
-                <b>급식 종류를 선택하세요.</b>
-                <Dropdown
-                    name='schMmealScCode'
-                    placeholder='급식 종류 선택'
-                    fluid
-                    selection
-                    value={form.schMmealScCode}
-                    onChange={handleDropdown}
-                    options={[
-                        {
-                            key: '조식',
-                            text: '조식',
-                            value: '1',
-                        },
-                        {
-                            key: '중식',
-                            text: '중식',
-                            value: '2',
-                        },
-                        {
-                            key: '석식',
-                            text: '석식',
-                            value: '3',
-                        }
-                    ]}
-                />
-
-                <b>날짜</b>
-                <Input type='date' fluid name="schYmd"
-                    placeholder="YYYY.MM.DD"
-                    value={form.schYmd}
-                    onChange={handleChange} />
-                <br />
-                <Button type="sumbit">확인</Button>
+                <br/>
+                <FormControl className={classes.formControl}>
+                    <InputLabel>학교 종류</InputLabel>
+                    <Select
+                        labelId="schoolKind"
+                        id="schoolKind"
+                        value={form.schoolKind}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: 'schoolKind',
+                            id: 'schoolKind',
+                        }}
+                    >
+                        <MenuItem value={1}>유치원</MenuItem>
+                        <MenuItem value={2}>초등학교</MenuItem>
+                        <MenuItem value={3}>중학교</MenuItem>
+                        <MenuItem value={4}>고등학교</MenuItem>
+                    </Select>
+                </FormControl>
+                <br/>
+                <FormControl className={classes.formControl}>
+                    <InputLabel>급식 종류</InputLabel>
+                    <Select
+                        labelId="schMmealScCode"
+                        id="schMmealScCode"
+                        value={form.schMmealScCode}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: 'schMmealScCode',
+                            id: 'schMmealScCode',
+                        }}
+                    >
+                        <MenuItem value={1}>조식</MenuItem>
+                        <MenuItem value={2}>중식</MenuItem>
+                        <MenuItem value={3}>석식</MenuItem>
+                    </Select>
+                </FormControl>
+                <br/>
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ko}>
+                    <KeyboardDatePicker
+                        disableToolbar
+                        variant="inline"
+                        format="yyyy.MM.dd"
+                        margin="normal"
+                        id="schYmd"
+                        label="날짜 선택"
+                        value={parse(form.schYmd, "yyyy.MM.dd", new Date())}
+                        onChange={handleDate}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                    />
+                </MuiPickersUtilsProvider>
+                <br/>
+                <Button type="sumbit" variant="contained" disabled={loading}>확인</Button>
+                {loading && <CircularProgress size={24} className={classes.buttonProgress}/>}
             </form>
-            {mealData && <Meal data={mealData} />}
+            {mealData && <Meal data={mealData}/>}
         </Container>
     )
 }
