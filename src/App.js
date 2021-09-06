@@ -10,6 +10,7 @@ import {
     Select,
     TextField
 } from '@material-ui/core'
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import {MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 
 import axios from 'axios'
@@ -62,7 +63,11 @@ const Form = () => {
     const classes = useStyles();
     const today = new Date();
     const [loading, setLoading] = React.useState(false);
+    const [schools, setSchools] = useState({});
     const [form, setForm] = useState({
+        search: "",
+        region: "",
+        kraOrgNm: "",
         schulCode: "",
         schoolKind: "",
         schMmealScCode: "",
@@ -79,6 +84,20 @@ const Form = () => {
             [name]: event.target.value,
         });
     };
+
+    const handleSchool = async (e) => {
+        setForm({
+            ...form,
+            search: e.target.value,
+        });
+        const formdata = {
+            query: e.target.value,
+            region: form.region
+        }
+        if (formdata.region != "" && formdata.query != "") {
+            setSchools(await getschools(formdata))
+        }
+    }
 
     const handleDate = (e) => {
         setForm({
@@ -99,6 +118,16 @@ const Form = () => {
         }
     }
 
+    const getschools = async (form) => {
+        try {
+            let response = await axios.get("http://localhost:8080/school", {
+                params: form
+            })
+            return response.data
+        } catch (e) {
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = {
@@ -112,12 +141,16 @@ const Form = () => {
         console.log(formData);
         const data = await getmeal(formData);
         console.log(data);
-        if (data.status === "OK") {
-            setMealData(data.meals);
-            setLoading(false);
-        } else {
-            alert("해당 날짜에는 급식이 없습니다!");
-            setLoading(false);
+        try {
+            if (data.status === "OK") {
+                setMealData(data.meals);
+                setLoading(false);
+            } else {
+                alert("해당 날짜에는 급식이 없습니다!");
+                setLoading(false);
+            }
+        } catch (e) {
+
         }
     }
 
@@ -126,32 +159,43 @@ const Form = () => {
         <Container maxWidth="sm">
             <form onSubmit={handleSubmit}>
                 <h1 className={classes.title}>{new Date().toLocaleDateString()}</h1>
-                <TextField fluid name="schulCode"
-                           defaultValue="Hello World"
-                           id="standard-basic"
-                           label="학교 코드"
-                           value={form.schulCode}
-                           onChange={handleChange}
-                />
-                <br/>
                 <FormControl className={classes.formControl}>
-                    <InputLabel>학교 종류</InputLabel>
+                    <InputLabel>관할 교육청</InputLabel>
                     <Select
                         labelId="schoolKind"
                         id="schoolKind"
-                        value={form.schoolKind}
+                        value={form.region}
                         onChange={handleChange}
                         inputProps={{
-                            name: 'schoolKind',
-                            id: 'schoolKind',
+                            name: 'region',
+                            id: 'region',
                         }}
                     >
-                        <MenuItem value={1}>유치원</MenuItem>
-                        <MenuItem value={2}>초등학교</MenuItem>
-                        <MenuItem value={3}>중학교</MenuItem>
-                        <MenuItem value={4}>고등학교</MenuItem>
+                        <MenuItem value={"sen"}>서울특별시</MenuItem>
+                        <MenuItem value={"pen"}>부산광역시</MenuItem>
+                        <MenuItem value={"dge"}>대구광역시</MenuItem>
+                        <MenuItem value={"ice"}>인천광역시</MenuItem>
+                        <MenuItem value={"gen"}>광주광역시</MenuItem>
+                        <MenuItem value={"dje"}>대전광역시</MenuItem>
+                        <MenuItem value={"use"}>울산광역시</MenuItem>
+                        <MenuItem value={"goe"}>경기도</MenuItem>
+                        <MenuItem value={"gwe"}>강원도</MenuItem>
+                        <MenuItem value={"cbe"}>충청북도</MenuItem>
+                        <MenuItem value={"cne"}>충청남도</MenuItem>
+                        <MenuItem value={"jbe"}>전라북도</MenuItem>
+                        <MenuItem value={"jne"}>전라남도</MenuItem>
+                        <MenuItem value={"kbe"}>경상북도</MenuItem>
+                        <MenuItem value={"gne"}>경상남도</MenuItem>
+                        <MenuItem value={"jje"}>제주특별자치도</MenuItem>
                     </Select>
                 </FormControl>
+                <br/>
+                <Autocomplete
+                    options={schools}
+                    getOptionLabel={(option) => option.title}
+                    onChange={handleSchool}
+                    value={form.search}
+                    renderInput={(params) => <TextField fluid name="search" label="학교 검색" />}/>
                 <br/>
                 <FormControl className={classes.formControl}>
                     <InputLabel>급식 종류</InputLabel>
