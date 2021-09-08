@@ -3,3 +3,7 @@
 * {
     font-family: 'Spoqa Han Sans Neo', 'sans-serif' !important;
 }
+
+body {
+    margin: 0;
+}
