@@ -7,28 +7,6 @@ import './index.css'
 
 const theme = createTheme({}, koKr);
 
-class index extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            drawerOpen: false
-        }
-    }
-
-    setDrawerOpen = (isDrawerOpen) => {
-        this.setState({
-            drawerOpen: isDrawerOpen
-        })
-    }
-
-    toggleDrawer = () => {
-        this.setState((pstate) => ({ drawerOpen: !pstate.drawerOpen }))
-    }
-}
-
-
-
 ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>

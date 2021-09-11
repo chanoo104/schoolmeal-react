@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import {
   AppBar,
   IconButton,
-  makeStyles,
   Toolbar,
   Typography,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { withStyles } from "@material-ui/styles";
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -27,12 +26,16 @@ const styles = theme => ({
   },
 });
 
-class Bar extends Component {
-  render() {
-    const state = {
-      left: false,
-    };
+class MenuBar extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick(e) {
+    this.props.click(true);
+  }
 
+  render() {
     const { classes } = this.props;
 
     return (
@@ -44,7 +47,7 @@ class Bar extends Component {
               className={classes.menuButton}
               color="inherit"
               aria-label="menu"
-              onClick={this.props.click}
+              onClick={this.handleClick}
             >
               <MenuIcon />
             </IconButton>
@@ -56,4 +59,4 @@ class Bar extends Component {
   }
 }
 
-export default withStyles(styles)(Bar);
+export default withStyles(styles)(MenuBar);

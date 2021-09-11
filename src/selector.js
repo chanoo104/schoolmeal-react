@@ -1,20 +1,15 @@
 import React from "react";
-import { SwipeableDrawer, AppBar, MenuItem } from "@material-ui/core";
+import { SwipeableDrawer, MenuItem } from "@material-ui/core";
 
-class drawer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+class Selector extends React.Component {
   render() {
     return (
       <div>
         <SwipeableDrawer
-          width={200}
-          openSecondary={true}
           open={this.props.open}
+          onClose={this.props.close}
+          docked={true}
         >
-          <AppBar title="Tasks" />
           <MenuItem onClick={() => this.props.setDrawerOpen(false)}>
             Menu Item
           </MenuItem>
@@ -27,4 +22,4 @@ class drawer extends React.Component {
   }
 }
 
-export default drawer;
+export default Selector;

@@ -10,7 +10,6 @@ import {
     Select,
     TextField
 } from '@material-ui/core'
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
 import axios from 'axios'
@@ -199,7 +198,7 @@ const Form = () => {
                     }}
                     renderInput={(params) => <TextField disabled={form.region == ""} fluid name="search" label="학교 검색" />}
                 /> */}
-                <TextField disabled={form.region == ""} onChange={handleSchool} fluid name="search" label="학교 검색" />
+                <TextField disabled={form.region === ""} onChange={handleSchool} fluid name="search" label="학교 검색" />
                 <br/>
                 <FormControl className={classes.formControl}>
                     <InputLabel>급식 종류</InputLabel>
