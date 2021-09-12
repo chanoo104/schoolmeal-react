@@ -27,7 +27,7 @@ export const Schoolmeal = () => {
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(1),
         minWidth: 180,
     },
     selectEmpty: {
@@ -200,7 +200,7 @@ const Form = () => {
                 /> */}
                 <TextField disabled={form.region === ""} onChange={handleSchool} fluid name="search" label="학교 검색" />
                 <br/>
-                <FormControl className={classes.formControl}>
+                <FormControl className={classes.formControl} >
                     <InputLabel>급식 종류</InputLabel>
                     <Select
                         labelId="schMmealScCode"

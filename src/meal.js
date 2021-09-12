@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardContent, makeStyles} from "@material-ui/core";
+import { Card, CardContent, makeStyles } from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -15,10 +15,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export const Meal = ({data}) => {
-
+export const Meal = ({ data }) => {
     const classes = useStyles();
-
     const mealList = data.map(
         (meal, index) => (<li key={index}>{meal}</li>)
     );

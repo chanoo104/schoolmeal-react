@@ -17,9 +17,9 @@ const styles = (theme) => ({
   },
   title: {
     flexGrow: 1,
-    marginLeft: "-7px",
+    marginLeft: "5px",
     marginTop: "2px",
-    fontSize: "21px",
+    fontSize: "23px",
   },
   toolbar: {
     minHeight: "55px",
@@ -34,10 +34,20 @@ class MenuBar extends Component {
   handleClick(e) {
     this.props.click(true);
   }
+  getLink() {
+    const link = window.location.href;
+    switch (window.location.href) {
+      case 'http://localhost:3000/':
+        return "홈";
+      case 'http://localhost:3000/meal':
+        return "급식";
+      default:
+        return "Not Found";
+    }
+  }
 
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -51,7 +61,9 @@ class MenuBar extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}></Typography>
+            <Typography variant="h6" className={classes.title}>
+              {this.getLink()}
+            </Typography>
           </Toolbar>
         </AppBar>
       </div>
