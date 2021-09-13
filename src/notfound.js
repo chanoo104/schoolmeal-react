@@ -1,20 +1,24 @@
 import React from "react";
-import { Container } from "@material-ui/core";
+import { Container, withStyles, CssBaseline } from "@material-ui/core";
 
+const styles = (theme) => ({
+    root: {
+        background: theme.palette.background.default,
+        height: "100vh",
+    },
+})
 class NotFound extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
+        const { classes } = this.props;
         return (
-            <Container maxWidth="sm">
-                <h1>
-                    404 Not Found
-                </h1>
-            </Container>
-        )
+            <div className={classes.root}>
+                <CssBaseline/>
+                <Container maxWidth="sm">
+                    <h1>404 Not Found</h1>
+                </Container>
+            </div>
+        );
     }
 }
 
-export default NotFound;
+export default withStyles(styles)(NotFound);
