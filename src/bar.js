@@ -35,11 +35,10 @@ class MenuBar extends Component {
     this.props.click(true);
   }
   getLink() {
-    const link = window.location.href;
-    switch (window.location.href) {
-      case 'http://localhost:3000/':
+    switch (window.location.href.split("/")[3]) {
+      case '':
         return "홈";
-      case 'http://localhost:3000/meal':
+      case 'meal':
         return "급식";
       default:
         return "Not Found";
