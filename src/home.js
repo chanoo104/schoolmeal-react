@@ -17,9 +17,6 @@ const styles = (theme) => ({
 });
 
 class Home extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     handleclick = (e) => {
         switch (e) {
             case "github":
@@ -46,7 +43,7 @@ class Home extends React.Component {
                         variant="contained"
                         color="default"
                         startIcon={
-                            <img src={github} className={classes.github} />
+                            <img src={github} alt="" className={classes.github} />
                         }
                         onClick={() => {
                             this.handleclick("github");
@@ -59,7 +56,7 @@ class Home extends React.Component {
                         className={classes.button}
                         variant="contained"
                         color="default"
-                        startIcon={<img src={boj} className={classes.boj} />}
+                        startIcon={<img src={boj} alt="" className={classes.boj} />}
                         onClick={() => {
                             this.handleclick("boj");
                         }}

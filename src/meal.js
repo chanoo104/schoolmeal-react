@@ -4,14 +4,10 @@ import { Card, CardContent, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-    card: {
         marginTop: 20,
-        backgroundColor: "#fdfbff"
-    }
+        backgroundColor: theme.palette.background.paper,
+        fontWeight: "300"
+    },
 }));
 
 
@@ -22,8 +18,8 @@ export const Meal = ({ data }) => {
     );
 
     return (
-        <Card className={classes.card}>
-            <CardContent>
+        <Card className={classes.root}>
+            <CardContent >
                 {mealList}
             </CardContent>
         </Card>
