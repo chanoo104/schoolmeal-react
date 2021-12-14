@@ -104,13 +104,7 @@ const Form = () => {
     };
     if (formdata.region !== "" && formdata.query !== "") {
       const schools = await getschools(formdata);
-      if (schools.status === "OK") {
-        setSchools(schools.schools);
-      } else if (once == false) {
-        setOnce(true);
-        setDisable(true);
-        alert("현재 서버가 꺼져있거나 응답하지않습니다.");
-      }
+      setSchools(schools.schools);
     }
   };
 
@@ -123,7 +117,7 @@ const Form = () => {
 
   const getmeal = async (form) => {
     try {
-      const res = await axios.get("http://localhost:8080/meal", {
+      const res = await axios.get("https://api.effx.one/meal", {
         params: form,
       });
       return res.data;
@@ -135,9 +129,8 @@ const Form = () => {
 
   const getschools = async (form) => {
     try {
-      const res = await axios.get("http://localhost:8080/school", {
+      const res = await axios.get("https://api.effx.one/school", {
         params: form,
-        timeout: 1000,
       });
       return res.data;
     } catch (e) {

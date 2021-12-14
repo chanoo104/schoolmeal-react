@@ -20,7 +20,7 @@ class Home extends React.Component {
     handleclick = (e) => {
         switch (e) {
             case "github":
-                window.location.href = "https://github.com/chanoo104";
+                window.location.href = "https://github.com/effx13";
                 break;
             case "boj":
                 window.location.href = "https://solved.ac/profile/fakehg13";
