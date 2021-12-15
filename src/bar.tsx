@@ -26,15 +26,11 @@ const styles = () => ({
   },
 });
 
-class MenuBar extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
+const MenuBar = (classes, setDrawerOpen) => {
+  const handleClick = () => {
+    setDrawerOpen(true);
   }
-  handleClick(e) {
-    this.props.click(true);
-  }
-  getLink() {
+  const getLink = () => {
     switch (window.location.href.split("/")[3]) {
       case '':
         return "홈";
@@ -45,29 +41,70 @@ class MenuBar extends Component {
     }
   }
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar className={classes.toolbar}>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={this.handleClick}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              {this.getLink()}
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
-  }
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={handleClick}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            {getLink()}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 }
+
+// class MenuBar extends Component<Props, State> {
+//   constructor(props: Props) {
+//     super(props);
+//     this.handleClick = this.handleClick.bind(this);
+//   }
+//   handleClick() {
+//     this.props.click(true);
+//   }
+//   getLink() {
+//     switch (window.location.href.split("/")[3]) {
+//       case '':
+//         return "홈";
+//       case 'meal':
+//         return "급식";
+//       default:
+//         return "Not Found";
+//     }
+//   }
+
+//   render() {
+//     const { classes } = this.props;
+//     return (
+//       <div className={classes.root}>
+//         <AppBar position="static">
+//           <Toolbar className={classes.toolbar}>
+//             <IconButton
+//               edge="start"
+//               className={classes.menuButton}
+//               color="inherit"
+//               aria-label="menu"
+//               onClick={this.handleClick}
+//             >
+//               <MenuIcon />
+//             </IconButton>
+//             <Typography variant="h6" className={classes.title}>
+//               {this.getLink()}
+//             </Typography>
+//           </Toolbar>
+//         </AppBar>
+//       </div>
+//     );
+//   }
+// }
 
 export default withStyles(styles)(MenuBar);

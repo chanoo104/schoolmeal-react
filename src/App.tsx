@@ -6,7 +6,7 @@ import Selector from "./selector";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import NotFound from "./notfound";
 
-class App extends React.Component {
+const App = (props) => {
     constructor(props) {
         super(props);
 
@@ -14,30 +14,28 @@ class App extends React.Component {
             drawerOpen: false,
         };
     }
-    setDrawerOpen = (isDrawerOpen) => {
+    const setDrawerOpen = (isDrawerOpen) => {
         this.setState({
             drawerOpen: isDrawerOpen,
         });
     };
-    closeDrawer = () => {
+    const closeDrawer = () => {
         this.setState({
             drawerOpen: false,
         });
     };
 
-    toggleDrawer = () => {
+    const toggleDrawer = () => {
         this.setState((pstate) => ({ drawerOpen: !pstate.drawerOpen }));
     };
-
-    render() {
         return (
             <BrowserRouter>
                 <header>
-                    <MenuBar click={this.setDrawerOpen} />
+                    <MenuBar setDrawerOpen={setDrawerOpen} />
                     <Selector
-                        setDrawerOpen={this.setDrawerOpen}
-                        open={this.state.drawerOpen}
-                        close={this.closeDrawer}
+                        setDrawerOpen={setDrawerOpen}
+                        open={state.drawerOpen}
+                        close={closeDrawer}
                     />
                 </header>
                 <Switch>
@@ -53,7 +51,6 @@ class App extends React.Component {
                 </Switch>
             </BrowserRouter>
         );
-    }
 }
 
 export default App;
