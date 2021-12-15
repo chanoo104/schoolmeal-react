@@ -2,8 +2,7 @@ import React from "react";
 import { Container, withStyles, CssBaseline, Button } from "@material-ui/core";
 import github from "./icons/github.svg";
 import boj from "./icons/boj.png";
-import { Fade } from "react-reveal";
-const styles = (theme) => ({
+const styles = (theme:any) => ({
     root: {
         background: theme.palette.background.default,
         height: "100vh",
@@ -17,7 +16,7 @@ const styles = (theme) => ({
 });
 
 class Home extends React.Component {
-    handleclick = (e) => {
+    handleclick = (e:string) => {
         switch (e) {
             case "github":
                 window.location.href = "https://github.com/effx13";
@@ -36,7 +35,6 @@ class Home extends React.Component {
             <div className={classes.root}>
                 <CssBaseline />
                 <Container maxWidth="sm">
-                    <Fade left />
                     <br />
                     <Button
                         className={classes.button}

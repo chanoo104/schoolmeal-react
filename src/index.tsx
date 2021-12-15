@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { createTheme, ThemeProvider } from "@material-ui/core";
-import { koKr } from "@material-ui/core/locale";
+import { koKR } from "@material-ui/core/locale";
 import "./index.css";
 
 const theme = createTheme(
@@ -11,13 +11,12 @@ const theme = createTheme(
             type: "dark",
         },
     },
-    koKr
+    koKR
 );
 
 ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
-            
             <App />
         </ThemeProvider>
     </React.StrictMode>,
