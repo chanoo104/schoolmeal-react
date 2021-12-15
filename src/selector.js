@@ -7,7 +7,7 @@ const styles = (theme) => ({
         marginTop: "0",
     },
     title: {
-      fontSize: "20px"
+        fontSize: "20px",
     },
     menu: {
         textDecoration: "none",
