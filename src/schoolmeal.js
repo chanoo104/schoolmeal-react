@@ -142,6 +142,7 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
+      region: form.region,
       schulCode: schools[0].orgCode,
       schulCrseScCode: schools[0].schulKndScCode,
       schulKndScCode: schools[0].schulCrseScCode,
