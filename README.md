@@ -7,7 +7,7 @@
     yarn install
     yarn start
 ### Build
-    git clone https://github.com/effx13/BubblePopServer.git
+    git clone https://github.com/effx13/schoolmeal-frontend.git
     cd BubblePopServer/
     yarn install
     yarn build
